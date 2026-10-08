@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cx_tda_engine"
+version = "0.1.0"
+description = "CortXplorer TDA engine: Mapper, persistent homology, lenses, anomaly and drift findings for tabular data"
+readme = "README.md"
+license = { text = "Proprietary" }
+requires-python = ">=3.11"
+authors = [{ name = "Narayan Yerrabachu" }]
+keywords = ["tda", "mapper", "persistent-homology", "anomaly-detection", "topological-data-analysis"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+]
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.0",
+  "scipy>=1.12,<1.15",
+  "scikit-learn>=1.4",
+  "ripser>=0.6.8",
+  "networkx>=3.0",
+]
+
+[project.optional-dependencies]
+umap = ["umap-learn>=0.5.7"]
+viz = ["plotly>=5.0", "matplotlib>=3.8"]
+dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.10", "build>=1.2"]
+
+[project.urls]
+Repository = "https://github.com/NarayanYerrabachu/cx_tda_engine"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cx_tda_engine"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+filterwarnings = [
+  # numpy on macOS Accelerate emits spurious matmul FP warnings inside sklearn; not ours
+  "ignore:.*encountered in matmul:RuntimeWarning",
+  "error::DeprecationWarning:cx_tda_engine",
+  "error::FutureWarning:cx_tda_engine",
+]
+
+[tool.ruff]
+line-length = 110
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E9", "F63", "F7", "F82", "F401", "I"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src"]
+check_untyped_defs = true
+warn_unused_ignores = true
+ignore_missing_imports = true
