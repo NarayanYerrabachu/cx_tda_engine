@@ -15,7 +15,7 @@ from cx_tda_engine import (
     loop_class,
     normalize,
 )
-from cx_tda_engine.drift import cluster_drift, temporal_metric_drift
+from cx_tda_engine.analysis.drift import cluster_drift, temporal_metric_drift
 
 from .conftest import FEATURES
 

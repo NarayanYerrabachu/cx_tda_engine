@@ -10,7 +10,7 @@ from sklearn.cluster import DBSCAN
 from sklearn.decomposition import PCA
 from sklearn.neighbors import NearestNeighbors
 
-from .config import TDAConfig, resolve
+from ..config import TDAConfig, resolve
 
 log = logging.getLogger(__name__)
 

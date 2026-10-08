@@ -7,8 +7,8 @@ from typing import Any
 import numpy as np
 from sklearn.decomposition import PCA
 
-from .config import TDAConfig, resolve
-from .risk import loop_class
+from ..config import TDAConfig, resolve
+from ..core.risk import loop_class
 
 log = logging.getLogger(__name__)
 

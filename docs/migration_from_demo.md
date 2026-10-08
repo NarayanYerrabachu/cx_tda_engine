@@ -13,15 +13,15 @@ The demo's `backend/tda/` package maps onto the library as follows.
 | `engine.compute_drift` | `compute_drift(..., time_col, metric_cols)` |
 | `engine.build_suspicious_findings` | `build_suspicious_findings(..., rules, group_cols, display_cols)` |
 | `engine.run_full_pipeline(df, cols, lens, n, ov, use_cache, should_abort)` | same positional args, plus `spec=`, `config=`, `cache=` |
-| `engine.cached_base` / `seed_base_cache` / `clear_base_cache` / `PipelineSuperseded` | same names (`cx_tda_engine.pipeline`) |
+| `engine.cached_base` / `seed_base_cache` / `clear_base_cache` / `PipelineSuperseded` | same names (`cx_tda_engine.pipeline`; `BaseCache` is now a protocol, `InMemoryBaseCache` the default) |
 | `backend.tda.mapper.run_mapper` | `cx_tda_engine.run_mapper` (+ `stats.dbscan_eps`) |
 | `backend.tda.mapper_viz` | `cx_tda_engine.viz` (extra `viz`) |
 | `backend.tda.lenses` | `cx_tda_engine.lenses` (+ `register_lens`, `lens_catalog`, `umap_available`) |
 | `gov_aid_schema.ANOMALY_HIGH_THRESHOLD` etc. | `TDAConfig.anomaly_high`, `high_lift`, `watch_lift`, `score_frac_weight`, `loop_*_max` |
-| `gov_aid_schema.graph_node_state`, `mapper_node_risk_level`, `mapper_risk_from_lift`, `node_risk_level`, `mapper_risk_counts`, `loop_class` | `cx_tda_engine.risk` (same names, optional `config=`) |
+| `gov_aid_schema.graph_node_state`, `mapper_node_risk_level`, `mapper_risk_from_lift`, `node_risk_level`, `mapper_risk_counts`, `loop_class` | `cx_tda_engine.core.risk` (same names, optional `config=`) |
 | `TDA_*` environment variables | `TDAConfig.from_env()` |
-| `backend.text_pipeline.chunk_documents` / `documents_to_dataframe` | `cx_tda_engine.text` (same names; `record_id` instead of `Project_ID`; optional SVD) |
-| `backend.processors.base.Document` / `DocumentProcessor`, registry | `cx_tda_engine.text` (same names); the PDF/Word/email/ZIP processors stay in the app |
+| `backend.text_pipeline.chunk_documents` / `documents_to_dataframe` | `cx_tda_engine.adapters.text` (same names; `record_id` instead of `Project_ID`; optional SVD) |
+| `backend.processors.base.Document` / `DocumentProcessor`, registry | `cx_tda_engine.adapters.text` (same names); the PDF/Word/email/ZIP processors stay in the app |
 
 ## The gov-aid `DatasetSpec`
 

@@ -89,6 +89,13 @@ class PipelineResult(TypedDict, total=False):
     error: str
 
 
+def make_finding(kind: str, title: str, score: float, sources: list[str], detail: str,
+                 extra: dict[str, Any] | None = None) -> Finding:
+    """The one place a finding dict is assembled, so every list has the same shape."""
+    return {"kind": kind, "title": title, "score": round(float(score), 4), "sources": list(sources),
+            "detail": detail, "extra": dict(extra or {})}
+
+
 #: A suspicious-record rule: given one row and its combined anomaly score, return
 #: the reasons (human-readable strings) it should be flagged for, or an empty list.
 SuspiciousRule = Callable[[pd.Series, float], list[str]]

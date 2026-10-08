@@ -23,9 +23,9 @@ import pandas as pd
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from .config import TDAConfig, resolve
-from .pipeline import DatasetSpec, run_full_pipeline
-from .types import PipelineResult
+from ..config import TDAConfig, resolve
+from ..core.types import PipelineResult
+from ..pipeline import DatasetSpec, run_full_pipeline
 
 TFIDF_PREFIX = "tfidf_"
 SVD_PREFIX = "lsa_"

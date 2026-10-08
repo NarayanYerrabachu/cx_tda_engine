@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 
-from .config import TDAConfig, resolve
-from .risk import priority
+from ..config import TDAConfig, resolve
+from ..core.risk import priority
 
 _MISSING = ("nan", "None", "Unknown", "N/A", "")
 

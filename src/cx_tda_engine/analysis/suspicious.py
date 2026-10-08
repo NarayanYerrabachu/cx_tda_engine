@@ -6,8 +6,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from .config import TDAConfig, resolve
-from .types import SuspiciousRule
+from ..config import TDAConfig, resolve
+from ..core.types import SuspiciousRule
 
 _MISSING = ("nan", "None", "Unknown", "N/A", "")
 

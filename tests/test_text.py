@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from cx_tda_engine import text
-from cx_tda_engine.text import (
+from cx_tda_engine.adapters import text
+from cx_tda_engine.adapters.text import (
     Document,
     DocumentProcessor,
     chunk_documents,

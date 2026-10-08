@@ -11,4 +11,5 @@ Initial extraction from the CortXplorer TDA demo.
 * Isolation Forest + topological anomaly scores, DBSCAN clustering with auto eps, relationships, drift, suspicious rules.
 * `TDAConfig` (replaces `TDA_*` env vars and schema constants) and `DatasetSpec` (replaces hard-coded column names).
 * `text` module: `Document`, chunking, TF-IDF / SVD vectorisation, `run_text_pipeline`, processor registry.
+* Layered package layout (core / analysis / mapper / pipeline / adapters / viz), stage chain, cache protocol, `TDAEngine` facade, `make_finding`.
 * Optional `viz` extra: 2-D / 3-D / galaxy Plotly figures, Matplotlib PNG, layout JSON.

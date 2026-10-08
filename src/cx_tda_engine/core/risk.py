@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .config import TDAConfig, resolve
+from ..config import TDAConfig, resolve
 
 NODE_STATES = ("anomalous", "warning", "normal")
 RISK_LEVELS = ("HIGH", "WATCH", "LOW")

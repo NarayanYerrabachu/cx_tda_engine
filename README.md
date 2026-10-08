@@ -7,11 +7,28 @@ of any dataset-specific assumptions.
 
 ## Install
 
+From GitHub (any machine with git access to the repo):
+
 ```bash
-pip install git+https://github.com/NarayanYerrabachu/cx_tda_engine.git
+pip install "cx_tda_engine @ git+https://github.com/NarayanYerrabachu/cx_tda_engine.git"
 pip install "cx_tda_engine[viz] @ git+https://github.com/NarayanYerrabachu/cx_tda_engine.git"   # + Plotly/Matplotlib renderers
 pip install "cx_tda_engine[umap] @ git+https://github.com/NarayanYerrabachu/cx_tda_engine.git"  # + UMAP lens
+pip install "cx_tda_engine @ git+https://github.com/NarayanYerrabachu/cx_tda_engine.git@v0.1.0" # pin a release tag
 ```
+
+In a `requirements.txt` or `Pipfile`:
+
+```
+cx_tda_engine @ git+https://github.com/NarayanYerrabachu/cx_tda_engine.git@v0.1.0
+```
+```toml
+cx_tda_engine = {git = "https://github.com/NarayanYerrabachu/cx_tda_engine.git", ref = "v0.1.0", extras = ["viz"]}
+```
+
+From a release wheel: every `v*` tag builds a wheel and attaches it to the
+GitHub release, so `pip install https://github.com/NarayanYerrabachu/cx_tda_engine/releases/download/v0.1.0/cx_tda_engine-0.1.0-py3-none-any.whl`
+works without git. Publishing to PyPI or a private index is one `twine upload dist/*` away
+(`python -m build` produces `dist/`).
 
 Development (pipenv, virtualenv named `cx_tda_engine`):
 
@@ -130,6 +147,34 @@ The engine never assumes column names. Domain behaviour is injected through `Dat
 
 See `docs/result_contract.md` for the output shape and
 `docs/migration_from_demo.md` for how the CortXplorer demo maps onto this API.
+
+## Package layout
+
+```
+cx_tda_engine/
+  config.py      TDAConfig: every numeric knob, TDAConfig.from_env()
+  core/          result types + make_finding, risk rules (lifts, loop classes), preprocessing
+  lenses/        Strategy + registry: BaseLens, get_lens, register_lens
+  analysis/      lens-independent stages: homology, clustering, anomalies, relationships, drift, suspicious
+  mapper/        build_mapper_graph (pipeline), run_mapper (exploration), dbscan_capped (memory guard)
+  pipeline/      DatasetSpec, stage chain (stages.py), cache protocol, run_full_pipeline, TDAEngine facade
+  adapters/      text: Document, chunking, TF-IDF/SVD, run_text_pipeline, processor registry
+  viz/           optional renderers: layouts, 2-D, 3-D + galaxy, PNG
+```
+
+Dependencies point downwards only (adapters -> pipeline -> mapper/analysis -> lenses/core -> config).
+Patterns: Strategy and Registry (lenses, document processors), chain of stages
+with an abort hook (pipeline/stages.py), Protocol-based cache (pipeline/cache.py),
+a single finding factory (core/types.py), Adapter (adapters/text.py) and a
+Facade (`TDAEngine`) for applications that run many pipelines with one setup.
+
+```python
+from cx_tda_engine import TDAEngine, TDAConfig, DatasetSpec
+
+engine = TDAEngine(config=TDAConfig(anomaly_top_k=50), spec=DatasetSpec(id_col="record_id"))
+result = engine.run(df, feature_cols, lens_name="density")        # own cache, own config
+graph = engine.mapper(df, feature_cols, lens_name="pca", anomaly_scores=result["combined_scores"])
+```
 
 ## Methodology in one paragraph
 

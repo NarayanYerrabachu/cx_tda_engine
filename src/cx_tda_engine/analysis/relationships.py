@@ -7,7 +7,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from .config import TDAConfig, resolve
+from ..config import TDAConfig, resolve
 
 _MISSING = ("nan", "None", "Unknown", "N/A", "")
 

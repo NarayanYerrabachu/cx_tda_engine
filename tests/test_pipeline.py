@@ -4,8 +4,8 @@ import numpy as np
 import pytest
 
 from cx_tda_engine import (
-    BaseCache,
     DatasetSpec,
+    InMemoryBaseCache,
     PipelineSuperseded,
     TDAConfig,
     cached_base,
@@ -79,7 +79,7 @@ def test_lens_change_reuses_cached_base(df, spec):
 
 
 def test_private_cache_and_seeding(df):
-    cache = BaseCache()
+    cache = InMemoryBaseCache()
     res = run_full_pipeline(df, FEATURES, cache=cache)
     assert len(cache) == 1 and cached_base(df, FEATURES) is None
     seed_base_cache(df, FEATURES, cache.get(df, FEATURES))
