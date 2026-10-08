@@ -108,10 +108,9 @@ def compute_clusters(
 
         label_parts = []
         for c in group_cols[:2]:
-            if len(c_df) > 0:
-                top = str(c_df[c].value_counts().index[0])
-                if top not in _MISSING:
-                    label_parts.append(top)
+            counts = c_df[c].value_counts()          # drops NaN; may be empty
+            if len(counts) and str(counts.index[0]) not in _MISSING:
+                label_parts.append(str(counts.index[0]))
 
         stat_fields = {}
         for col in stat_cols:

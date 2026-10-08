@@ -85,6 +85,16 @@ def test_compute_clusters_without_groups(df, X_norm, record_ids):
     assert all(t["title"] == f"Cluster {t['extra']['cluster_id']}" for t in themes)
 
 
+def test_compute_clusters_tolerates_empty_group_column(df, X_norm, record_ids):
+    """A grouping column that is all-missing (e.g. parent_file of plain-text documents)
+    must not crash the theme labels."""
+    df = df.copy()
+    df["empty"] = None
+    labels, themes = compute_clusters(X_norm, df, record_ids, ["empty", "group_a"])
+    assert len(labels) == len(df) and themes
+    assert all("None" not in t["title"] and "nan" not in t["title"] for t in themes)
+
+
 def test_detect_anomalies(df, X_norm, record_ids):
     labels, _ = compute_clusters(X_norm, df, record_ids)
     findings, scores, iso, topo = detect_anomalies(X_norm, df, record_ids, labels, FEATURES,
