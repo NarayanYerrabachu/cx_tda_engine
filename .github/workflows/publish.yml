@@ -1,0 +1,48 @@
+# Manual publish to TestPyPI or PyPI via trusted publishing (no API token stored).
+# One-time setup on pypi.org / test.pypi.org: project "cx-tda-engine" -> Publishing ->
+# add GitHub publisher: owner NarayanYerrabachu, repo cx_tda_engine, workflow publish.yml,
+# environment "pypi" (or "testpypi"). Then run this workflow from the Actions tab.
+name: publish
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Where to upload"
+        required: true
+        default: testpypi
+        type: choice
+        options: [testpypi, pypi]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install build twine
+      - run: python -m build
+      - run: twine check --strict dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target }}
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Upload to TestPyPI
+        if: inputs.target == 'testpypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+      - name: Upload to PyPI
+        if: inputs.target == 'pypi'
+        uses: pypa/gh-action-pypi-publish@release/v1

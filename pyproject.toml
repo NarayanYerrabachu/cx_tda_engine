@@ -6,17 +6,26 @@ build-backend = "hatchling.build"
 name = "cx_tda_engine"
 version = "0.1.0"
 description = "CortXplorer TDA engine: Mapper, persistent homology, lenses, anomaly and drift findings for tabular data"
-readme = "README.md"
-license = { text = "Proprietary" }
+readme = { file = "README.md", content-type = "text/markdown" }
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [{ name = "Narayan Yerrabachu" }]
-keywords = ["tda", "mapper", "persistent-homology", "anomaly-detection", "topological-data-analysis"]
+keywords = ["tda", "mapper", "persistent-homology", "anomaly-detection", "topological-data-analysis",
+            "unsupervised", "clustering", "text-mining"]
 classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Typing :: Typed",
 ]
 dependencies = [
   "numpy>=1.26",
@@ -30,13 +39,19 @@ dependencies = [
 [project.optional-dependencies]
 umap = ["umap-learn>=0.5.7"]
 viz = ["plotly>=5.0", "matplotlib>=3.8"]
-dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.10", "build>=1.2"]
+dev = ["pytest>=8.0", "ruff>=0.6", "mypy>=1.10", "build>=1.2", "twine>=5.0"]
 
 [project.urls]
+Homepage = "https://github.com/NarayanYerrabachu/cx_tda_engine"
 Repository = "https://github.com/NarayanYerrabachu/cx_tda_engine"
+Changelog = "https://github.com/NarayanYerrabachu/cx_tda_engine/blob/main/CHANGELOG.md"
+Issues = "https://github.com/NarayanYerrabachu/cx_tda_engine/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/cx_tda_engine"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/cx_tda_engine", "tests", "docs/*.md", "README.md", "CHANGELOG.md", "LICENSE", "pyproject.toml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

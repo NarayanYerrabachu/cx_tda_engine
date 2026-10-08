@@ -7,6 +7,14 @@ of any dataset-specific assumptions.
 
 ## Install
 
+From PyPI, once the first release is published (see `docs/publishing.md`):
+
+```bash
+pip install cx-tda-engine
+pip install "cx-tda-engine[viz]"      # + Plotly/Matplotlib renderers
+pip install "cx-tda-engine[umap]"     # + UMAP lens
+```
+
 From GitHub (any machine with git access to the repo):
 
 ```bash
@@ -27,8 +35,7 @@ cx_tda_engine = {git = "https://github.com/NarayanYerrabachu/cx_tda_engine.git",
 
 From a release wheel: every `v*` tag builds a wheel and attaches it to the
 GitHub release, so `pip install https://github.com/NarayanYerrabachu/cx_tda_engine/releases/download/v0.1.0/cx_tda_engine-0.1.0-py3-none-any.whl`
-works without git. Publishing to PyPI or a private index is one `twine upload dist/*` away
-(`python -m build` produces `dist/`).
+works without git. Publishing to PyPI is documented in `docs/publishing.md`.
 
 Development (pipenv, virtualenv named `cx_tda_engine`):
 

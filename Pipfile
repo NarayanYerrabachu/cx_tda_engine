@@ -11,6 +11,7 @@ pytest = ">=8.0.0"
 ruff = ">=0.6.0"
 mypy = ">=1.10"
 build = ">=1.2"
+twine = ">=5.0"
 
 [requires]
 python_version = "3.13"
